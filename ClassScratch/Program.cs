@@ -10,8 +10,10 @@ namespace ClassScratch
     {
         static void Main(string[] args)
         {
-            var ledzep = new ClassicRock();
+            var bandList = new List<RockBand>();
 
+            var ledzep = new ClassicRock();
+            ledzep.BandName = "Led Zeppelin";
             ledzep.Singer = new BandMember
             {
                 Name = "Robert Plant",
@@ -19,6 +21,33 @@ namespace ClassScratch
                 DrugAddict=false,
                 IsDead=false
             };
+            bandList.Add(ledzep);
+
+            var dbt = new AltCountry
+            {
+                BandName = "Drive-By Truckers",
+                Singer = new BandMember {
+                    Name = "Patterson Hood",
+                    Crazy = false,
+                    DrugAddict = false,
+                    IsDead = false
+                },
+            };
+
+            bandList.Add(dbt);
+
+            foreach (var item in bandList)
+            {
+                if(item.GetType() == typeof(AltCountry))
+                {
+                    Console.WriteLine("There is an alt country singer named {0} here.", item.Singer.Name);
+                }
+                if(typeof(RockBand).IsAssignableFrom(item.GetType()))
+                {
+                    Console.WriteLine("There is a singer for a band that descends from type 'RockBand' named {0} here.", item.Singer.Name);
+                }
+            }
+            Console.ReadLine();
             
         }
 
@@ -37,6 +66,7 @@ namespace ClassScratch
 
         public abstract class RockBand
         {
+            public string BandName { get; set; }
             public BandMember Drummer { get; set; }
             public BandMember Singer { get; set; }
             public BandMember LeadGuitarist { get; set; }
